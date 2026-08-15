@@ -564,12 +564,12 @@ function render(){
     from the application completely.
   */
 
-  const activeData =
-    data.filter(v =>
-      String(v.source_status || "")
-        .trim()
-        .toLowerCase() !== "delete & deceased"
-    );
+  const activeData = data.filter(v => {
+  const status = String(v.source_status || "").trim().toLowerCase();
+
+  return status !== "delete" &&
+         status !== "delete & deceased";
+});
 
 
   /*
