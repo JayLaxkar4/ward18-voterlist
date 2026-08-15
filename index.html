@@ -92,7 +92,7 @@ async function init(){
   if(session) showApp(session); else showLogin();
 }
 function showLogin(){el("login").style.display="grid";el("app").style.display="none";}
-function showApp(session){el("login").style.display="none";el("app").style.display="block";el("userEmail").textContent=session.user.email||"";load();}
+function showApp(session){el("login").style.display="none";el("app").style.display="block";el("userEmail").textContent=session.user.email||"";load(); resetInactivityTimer();}
 async function load(){
   const {data:d,error}=await sb.from("voters").select("*").order("id");
   if(error){el("list").innerHTML='<div class="empty">Could not load voter data. Check Supabase setup.</div>';return}
@@ -124,6 +124,23 @@ async function toggleVisit(id,value){
   if(error){alert("Unable to save status.");return}
   const i=data.findIndex(x=>x.id===id);if(i>=0)data[i]=d;render();
 }
+  // Auto logout after 1 hour of inactivity
+let inactivityTimer;
+
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+
+  inactivityTimer = setTimeout(async () => {
+    alert("Session expired due to 1 hour of inactivity.");
+    await sb.auth.signOut();
+    showLogin();
+  }, 60 * 60 * 1000); // 1 hour
+}
+
+// Reset timer whenever user is active
+["click", "keydown", "touchstart", "scroll", "mousemove"].forEach(event => {
+  document.addEventListener(event, resetInactivityTimer, true);
+});
 el("search").addEventListener("input",render);
 document.querySelectorAll(".filter").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");filter=b.dataset.filter;render()}));
 el("loginBtn").onclick=async()=>{el("loginError").textContent="";const {error}=await sb.auth.signInWithPassword({email:el("email").value,password:el("password").value});if(error)el("loginError").textContent=error.message};
