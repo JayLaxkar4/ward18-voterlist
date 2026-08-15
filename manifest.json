@@ -1,0 +1,8 @@
+{
+  "name": "Voter List \u2014 Ward No. 18",
+  "short_name": "Ward 18 Voters",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f7fb",
+  "theme_color": "#0f172a"
+}
