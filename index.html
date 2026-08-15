@@ -20,13 +20,30 @@ input{width:100%;padding:14px;border:1px solid #d1d5db;border-radius:12px;font-s
 .top{display:flex;justify-content:space-between;gap:10px}.name{font-size:18px;font-weight:800}.serial{font-size:11px;font-weight:800;background:#f1f5f9;padding:5px 7px;border-radius:7px;white-space:nowrap}.meta{margin-top:8px;display:grid;gap:4px;font-size:12px;color:#475467}.meta strong{color:#111827}.actions{margin-top:13px;display:flex;justify-content:space-between;align-items:center}.visit{border:0;border-radius:10px;padding:10px 13px;background:var(--dark);color:#fff;font-weight:750}.visited .visit{background:var(--green)}.badge{font-size:11px;color:var(--green);font-weight:800}.empty{text-align:center;color:var(--muted);padding:35px}
 #login{min-height:100vh;display:grid;place-items:center;padding:20px;background:var(--bg)}.login{width:min(420px,100%);background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 10px 30px #0f172a12}.login h1{margin:0 0 5px}.login p{color:var(--muted);font-size:13px}.login input{margin:6px 0}.login button{width:100%;margin-top:8px;padding:13px;border:0;border-radius:11px;background:var(--dark);color:white;font-weight:800}.error{color:var(--danger);font-size:12px;min-height:18px}
 @media(min-width:700px){header{margin:18px;border-radius:24px}}
+
+.login-title-sub{font-size:18px;font-weight:700;color:#b45309;margin-top:-2px;margin-bottom:8px}
+.login{position:relative;overflow:hidden}
+.login:before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,#c2410c,#f59e0b,#ea580c)}
+.login h1{font-size:30px;color:#1f2937}
+.login button{background:linear-gradient(135deg,#c2410c,#f59e0b);box-shadow:0 7px 16px #c2410c30}
+header{background:linear-gradient(135deg,#7c2d12,#c2410c 48%,#f59e0b);box-shadow:0 8px 24px #7c2d1225}
+.panel{box-shadow:0 8px 22px #7c2d1210}
+input:focus{border-color:#ea580c;box-shadow:0 0 0 3px #f9731618}
+.filter.active{background:#c2410c;border-color:#c2410c}
+.card{position:relative}
+.serial{font-size:14px;font-weight:900;background:linear-gradient(135deg,#fff7ed,#ffedd5);color:#9a3412;border:2px solid #fdba74;padding:9px 11px;border-radius:11px;box-shadow:0 3px 9px #c2410c15}
+.serial:before{content:"VOTER SERIAL";display:block;font-size:8px;letter-spacing:1px;color:#c2410c;margin-bottom:2px}
+.card .name{font-size:20px}
+.visit{background:linear-gradient(135deg,#9a3412,#ea580c)}
+.visited .visit{background:linear-gradient(135deg,#15803d,#22c55e)}
+@media(max-width:520px){.serial{min-width:125px;text-align:center}.card .name{font-size:19px}}
 </style>
 </head>
 <body>
 <div id="login">
   <div class="login">
     <div class="eyebrow">Private voter system</div>
-    <h1>Ward No. 18</h1>
+    <h1>Janta Colony</h1><div class="login-title-sub">Voter List</div>
     <p>Sign in to access the voter list.</p>
     <input id="email" type="email" placeholder="Email">
     <input id="password" type="password" placeholder="Password">
@@ -38,7 +55,7 @@ input{width:100%;padding:14px;border:1px solid #d1d5db;border-radius:12px;font-s
 <div id="app" style="display:none">
 <header><div class="wrap">
   <div class="eyebrow">Election Voter Management</div>
-  <div class="title">Voter List — Ward No. 18</div>
+  <div class="title">Janta Colony — Voter List</div>
   <div class="sub">Search voters and mark visits.</div>
   <div class="stats">
     <div class="stat"><b id="total">—</b><span>Total Voters</span></div>
@@ -62,8 +79,8 @@ input{width:100%;padding:14px;border:1px solid #d1d5db;border-radius:12px;font-s
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = "https://czmezvtrjirwxwlltbpl.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable__4c6OqQPgOcf07lFz2JVkA_X3ItvEp9";
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let data=[], filter="all";
 
