@@ -107,6 +107,34 @@ input{
   outline:none
 }
 
+  .search-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.search-grid input{
+  width:100%;
+  height:48px;
+  padding:0 14px;
+  border:1px solid #d1d5db;
+  border-radius:12px;
+  font-size:15px;
+  outline:none;
+  background:#fff;
+}
+
+.search-grid input:focus{
+  border-color:#ea580c;
+  box-shadow:0 0 0 3px #f9731618;
+}
+
+@media(max-width:600px){
+  .search-grid{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+}
 input:focus{
   border-color:#ea580c;
   box-shadow:0 0 0 3px #f9731618
@@ -407,17 +435,22 @@ button{
 
   <section class="panel">
 
-    <input
-      id="search"
-      autocomplete="off"
-      placeholder="Search by voter name…"
-    >
-    <input
-  id="serialSearch"
-  autocomplete="off"
-  inputmode="numeric"
-  placeholder="Search by Voter Serial Number…"
->
+   <div class="search-grid">
+
+  <input
+    id="search"
+    autocomplete="off"
+    placeholder="Search by voter name…"
+  >
+
+  <input
+    id="serialSearch"
+    autocomplete="off"
+    inputmode="numeric"
+    placeholder="Search by Voter Serial Number…"
+  >
+
+    </div>
 
     <div class="controls">
 
