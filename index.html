@@ -412,6 +412,12 @@ button{
       autocomplete="off"
       placeholder="Search by voter name…"
     >
+    <input
+  id="serialSearch"
+  autocomplete="off"
+  inputmode="numeric"
+  placeholder="Search by Voter Serial Number…"
+>
 
     <div class="controls">
 
@@ -557,6 +563,11 @@ function render(){
       .value
       .trim()
       .toLowerCase();
+  const serialQuery =
+  el("serialSearch")
+    .value
+    .trim()
+    .toLowerCase();
 
 
   /*
@@ -580,11 +591,19 @@ function render(){
   const arr =
     activeData.filter(v => {
 
-      const match =
-        !q ||
-        String(v.name || "")
-          .toLowerCase()
-          .includes(q);
+    const nameMatch =
+  !q ||
+  String(v.name || "")
+    .toLowerCase()
+    .includes(q);
+
+const serialMatch =
+  !serialQuery ||
+  String(v.voter_serial || "")
+    .toLowerCase()
+    .includes(serialQuery);
+
+const match = nameMatch && serialMatch;
 
       return (
         match &&
@@ -821,7 +840,11 @@ el("search")
     "input",
     render
   );
-
+el("serialSearch")
+  .addEventListener(
+    "input",
+    render
+  );
 
 /* =========================
    FILTER BUTTONS
