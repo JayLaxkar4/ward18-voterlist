@@ -52,11 +52,19 @@ function resetInactivityTimer(){clearTimeout(inactivityTimer);inactivityTimer=se
 el("search").addEventListener("input",render);el("serialSearch").addEventListener("input",render);
 document.querySelectorAll(".filter").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");filter=b.dataset.filter;render()}));
 el("loginBtn").onclick=async()=>{
+  const email=el("email").value.trim();
+  const password=el("password").value;
+
   el("loginError").textContent="";
 
+  if(!email || !password){
+    el("loginError").textContent="Please enter email and password.";
+    return;
+  }
+
   const {data,error}=await sb.auth.signInWithPassword({
-    email:el("email").value.trim(),
-    password:el("password").value
+    email:email,
+    password:password
   });
 
   if(error){
@@ -64,8 +72,13 @@ el("loginBtn").onclick=async()=>{
     return;
   }
 
-  if(data.session){
-    showApp(data.session);
+  if(data && data.session){
+    el("login").classList.add("hidden");
+    el("app").classList.remove("hidden");
+    el("userEmail").textContent=data.session.user.email || "";
+
+    resetInactivityTimer();
+    await load();
   }
 };
 el("logout").onclick=async()=>{clearTimeout(inactivityTimer);await sb.auth.signOut();showLogin()};
