@@ -51,7 +51,23 @@ function resetInactivityTimer(){clearTimeout(inactivityTimer);inactivityTimer=se
 ["click","keydown","touchstart","scroll","mousemove"].forEach(e=>document.addEventListener(e,resetInactivityTimer,true));
 el("search").addEventListener("input",render);el("serialSearch").addEventListener("input",render);
 document.querySelectorAll(".filter").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");filter=b.dataset.filter;render()}));
-el("loginBtn").onclick=async()=>{el("loginError").textContent="";const {error}=await sb.auth.signInWithPassword({email:el("email").value,password:el("password").value});if(error)el("loginError").textContent=error.message};
+el("loginBtn").onclick=async()=>{
+  el("loginError").textContent="";
+
+  const {data,error}=await sb.auth.signInWithPassword({
+    email:el("email").value.trim(),
+    password:el("password").value
+  });
+
+  if(error){
+    el("loginError").textContent=error.message;
+    return;
+  }
+
+  if(data.session){
+    showApp(data.session);
+  }
+};
 el("logout").onclick=async()=>{clearTimeout(inactivityTimer);await sb.auth.signOut();showLogin()};
 sb.auth.onAuthStateChange((e,s)=>{s?showApp(s):showLogin()});init();
 </script></body>
