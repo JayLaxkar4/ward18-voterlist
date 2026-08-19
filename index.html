@@ -31,7 +31,9 @@ main{padding:14px 0 40px}.userbar{display:flex;justify-content:space-between;ali
 <section class="section"><h2 class="section-title">Voter Distribution</h2><div class="section-sub">Visual presentation of active voters by caste</div><div class="chart-wrap"><canvas id="casteChart"></canvas></div></section>
 <section id="voterSection" class="section hidden"><h2 id="voterSectionTitle" class="section-title">Voters</h2><div class="search-grid"><input id="search" autocomplete="off" placeholder="Search by voter name…"><input id="serialSearch" autocomplete="off" inputmode="numeric" placeholder="Search by Voter Serial Number…"></div><div class="filters"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="remaining">Remaining</button><button class="filter" data-filter="visited">Visited</button></div><div id="count" class="count"></div><div id="list"></div></section></main></div>
 <script>
-const SUPABASE_URL="https://czmezvtrjirwxwlltbpl.supabase.co"; SUPABASE_ANON_KEY="sb_publishable__4c6OqQPgOcf07lFz2JVkA_X3ItvEp9";const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const SUPABASE_URL="https://czmezvtrjirwxwlltbpl.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable__4c6OqQPgOcf07lFz2JVkA_X3ItvEp9";
+  const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let data=[],filter="all",selectedCategory=null,inactivityTimer,casteChart=null;
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));const el=id=>document.getElementById(id);
 async function init(){const {data:{session}}=await sb.auth.getSession();session?showApp(session):showLogin()}
