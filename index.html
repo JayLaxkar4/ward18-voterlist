@@ -82,6 +82,6 @@ el("loginBtn").onclick=async()=>{
   }
 };
 el("logout").onclick=async()=>{clearTimeout(inactivityTimer);await sb.auth.signOut();showLogin()};
-sb.auth.onAuthStateChange((e,s)=>{s?showApp(s):showLogin()});init();
+init();
 </script></body>
 </html>
