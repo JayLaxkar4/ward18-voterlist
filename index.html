@@ -59,7 +59,7 @@ const SUPABASE_URL="https://czmezvtrjirwxwlltbpl.supabase.co",SUPABASE_ANON_KEY=
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let data=[],voterFilter="all",boothFilter="all",selectedCategory=null,inactivityTimer,casteChart=null;
 const el=id=>document.getElementById(id),esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-function activeVoters(){return data.filter(v=>{const s=String(v.source_status||"").trim().toLowerCase();return s!=="delete"&&s!=="delete & deceased"})}
+function activeVoters(){return data.filter(v=>{const s=String(v.source_status||"").trim().toLowerCase();return s!=="delete"&&s!=="deceased"})}
 async function init(){const {data:{session}}=await sb.auth.getSession();session?showApp(session):showLogin()}
 function showLogin(){el("login").classList.remove("hidden");el("app").classList.add("hidden")}
 function showApp(s){el("login").classList.add("hidden");el("app").classList.remove("hidden");el("userEmail").textContent=s.user.email||"";resetInactivityTimer();load()}
